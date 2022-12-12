@@ -1,36 +1,96 @@
-import { Alchemy, Network } from 'alchemy-sdk';
-import { useEffect, useState } from 'react';
-
-import './App.css';
-
-// Refer to the README doc for more information about using API
-// keys in client-side code. You should never do this in production
-// level code.
-const settings = {
-  apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
-  network: Network.ETH_MAINNET,
-};
-
-
-// In this week's lessons we used ethers.js. Here we are using the
-// Alchemy SDK is an umbrella library with several different packages.
-//
-// You can read more about the packages here:
-//   https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
-const alchemy = new Alchemy(settings);
+import { useEffect, useState } from "react";
+import * as React from "react";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import { Grid, Paper } from "@mui/material";
+import HeaderToolBar from "./components/HeaderToolBar";
+import Copyright from "./components/Copyright";
+import EthereumPrice from "./components/EthereumPrice";
+import BlockData from "./components/BlockData";
+import BlockInformation from "./components/BlockInformation";
+import Transactions from "./components/Transactions";
+import { getLatestBlockNumber } from "./components/AlchemySDK/commons";
+import Blocks from "./components/Blocks";
 
 function App() {
   const [blockNumber, setBlockNumber] = useState();
 
   useEffect(() => {
-    async function getBlockNumber() {
-      setBlockNumber(await alchemy.core.getBlockNumber());
-    }
-
-    getBlockNumber();
+    if (!blockNumber) getLatestBlockNumber().then((res) => setBlockNumber(res));
   });
 
-  return <div className="App">Block Number: {blockNumber}</div>;
+  return (
+    <Box
+      component="main"
+      sx={{
+        backgroundColor: (theme) =>
+          theme.palette.mode === "light"
+            ? theme.palette.grey[100]
+            : theme.palette.grey[900],
+        flexGrow: 1,
+        height: "100vh",
+        overflow: "auto",
+      }}
+    >
+      <HeaderToolBar />
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Grid container spacing={3}>
+          {/* Ethereum statistics */}
+          <Grid item xs={12}>
+            <Paper
+              sx={{
+                pl: 2,
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <EthereumPrice />
+            </Paper>
+          </Grid>
+
+          {/* Block main statistics */}
+          <Grid item xs={12} md={6} lg={4}>
+            <Paper
+              sx={{
+                p: 2,
+                display: "flex",
+                flexDirection: "column",
+                height: 220,
+              }}
+            >
+              <BlockData blockNumber={blockNumber} />
+            </Paper>
+          </Grid>
+          {/* Block information data */}
+          <Grid item xs={12} md={6} lg={8}>
+            <Paper
+              sx={{
+                p: 2,
+                display: "flex",
+                flexDirection: "column",
+                height: 220,
+              }}
+            >
+              <BlockInformation blockNumber={blockNumber} />
+            </Paper>
+          </Grid>
+          {/* Recent Blocks */}
+          <Grid item xs={12} md={6}>
+            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+              <Blocks blockNumber={blockNumber} />
+            </Paper>
+          </Grid>
+          {/* Recent Transactions */}
+          <Grid item xs={12} md={6}>
+            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+              <Transactions blockNumber={blockNumber} />
+            </Paper>
+          </Grid>
+        </Grid>
+        <Copyright sx={{ pt: 4 }} />
+      </Container>
+    </Box>
+  );
 }
 
 export default App;
