@@ -1,6 +1,7 @@
 import * as React from "react";
 import Link from "@mui/material/Link";
 import { CopyTextToClip } from "./CopyTextToClip";
+import { Link as LinkRouter } from "react-router-dom";
 
 const sliceHash = (hash) => {
   return hash
@@ -10,26 +11,29 @@ const sliceHash = (hash) => {
 
 export default function Hash({
   hash = "0x",
+  text,
   path,
   hasLink = true,
   hasCopy = true,
+  isCompressed = true,
   ...props
 }) {
   const hrefPath = path ? `/${path}/${hash}` : `/${hash}`;
+  const hashText = text ? text : isCompressed ? sliceHash(hash) : hash;
 
   return (
     <span {...props}>
-      <span sx={{ flex: "1 1 80%" }}>
+      <span>
         {hasLink ? (
-          <Link color="primary" href={hrefPath}>
-            {sliceHash(hash)}
+          <Link color="primary" component={LinkRouter} to={hrefPath}>
+            {hashText}
           </Link>
         ) : (
-          sliceHash(hash)
+          hashText
         )}
       </span>
       {hasCopy && (
-        <span sx={{ m: 1, flex: "1 1 20%" }}>
+        <span sx={{ m: 2 }}>
           <CopyTextToClip text={hash} size="x-small" />
         </span>
       )}

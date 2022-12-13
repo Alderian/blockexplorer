@@ -8,6 +8,7 @@ import InputBase from "@mui/material/InputBase";
 import AdbIcon from "@mui/icons-material/Adb";
 import SearchIcon from "@mui/icons-material/Search";
 import { Container } from "@mui/material";
+import Link from "@mui/material/Link";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -55,17 +56,24 @@ export default function HeaderToolBar() {
       <AppBar position="static">
         <Container maxWidth="lg">
           <Toolbar disableGutters>
-            <AdbIcon
-              sx={{ display: { xs: "none", md: "flex" }, mr: 1, ml: 1 }}
-            />
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              Blockchain explorer
-            </Typography>
+            <Link color="#ffffff" href="/" underline="none">
+              <Typography
+                variant="h6"
+                noWrap
+                component="span"
+                sx={{
+                  display: { xs: "none", sm: "flex", alignItems: "center" },
+                }}
+              >
+                <AdbIcon
+                  sx={{
+                    mr: 1,
+                    ml: 1,
+                  }}
+                />
+                Blockchain explorer
+              </Typography>
+            </Link>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />

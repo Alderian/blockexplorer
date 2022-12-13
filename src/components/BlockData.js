@@ -19,7 +19,7 @@ export default function BlockData({ blockNumber }) {
         <ul>
           <li>Block number: {blockWithTransactions.number}</li>
           <li>
-            Mined @
+            Mined {formatAgeInSeconds(blockWithTransactions.timestamp)} ago (@
             {new Intl.DateTimeFormat("en-US", {
               year: "numeric",
               month: "2-digit",
@@ -28,8 +28,8 @@ export default function BlockData({ blockNumber }) {
               minute: "2-digit",
               second: "2-digit",
             }).format(blockWithTransactions.timestamp * 1000)}
+            )
           </li>
-          <li>Age: {formatAgeInSeconds(blockWithTransactions.timestamp)}</li>
           <li>
             Transactions in block:
             {blockWithTransactions?.transactions?.length}
