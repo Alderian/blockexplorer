@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import * as ReactDOMClient from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -15,7 +15,7 @@ import Address from "./pages/Address";
 
 const mdTheme = createTheme();
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOMClient.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={mdTheme}>
