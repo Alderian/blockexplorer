@@ -1,9 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import App from "./pages/App";
+import Transaction from "./pages/Transaction";
+import HeaderToolBar from "./components/HeaderToolBar";
+import Copyright from "./components/Copyright";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import { Grid } from "@mui/material";
+import Block from "./pages/Block";
+import Address from "./pages/Address";
 
 const mdTheme = createTheme();
 
@@ -13,14 +21,33 @@ root.render(
     <ThemeProvider theme={mdTheme}>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          {/* <Route path="/tx/:transaction" element={<Transaction />} />
-          <Route path="/block/:block" element={<Block />} />
-          <Route path="/address/:address" element={<Address />} /> */}
-        </Routes>
-      </BrowserRouter>
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === "light"
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: "100vh",
+          overflow: "auto",
+        }}
+      >
+        <HeaderToolBar />
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Grid container spacing={3}>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<App />} />
+                <Route path="/tx/:transaction" element={<Transaction />} />
+                <Route path="/block/:block" element={<Block />} />
+                <Route path="/address/:address" element={<Address />} />
+              </Routes>
+            </BrowserRouter>
+          </Grid>
+          <Copyright sx={{ pt: 4 }} />
+        </Container>
+      </Box>
     </ThemeProvider>
   </React.StrictMode>
 );

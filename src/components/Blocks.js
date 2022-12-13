@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { alchemy, getBlock } from "./AlchemySDK/commons";
+import { getBlock } from "./AlchemySDK/commons";
 import formatAgeInSeconds from "./commons";
 import Hash from "./ui/Hash";
 
