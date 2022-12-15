@@ -70,7 +70,7 @@ export default function Transaction() {
                     path="block"
                     text={transactionDetail.blockNumber}
                     hash={transactionDetail.blockHash}
-                  />
+                  />{" "}
                   {transactionDetail.confirmations} confirmations
                 </TableCell>
               </TableRow>
@@ -113,21 +113,28 @@ export default function Transaction() {
                       transactionDetail.gasUsed
                     )
                   )}{" "}
-                  ETH ( maxFeePerGas * gasUsed (in Gwei):
+                  ETH ( gasPrice * gasUsed (in Gwei):{" "}
                   {Utils.formatUnits(
-                    transactionDetail.maxFeePerGas.mul(
-                      transactionDetail.gasUsed
-                    ),
+                    transactionDetail.gasPrice.mul(transactionDetail.gasUsed),
                     "gwei"
                   )}
                   )
                 </TableCell>
               </TableRow>
-              <TableRow>
+              {/* TODO: <TableRow>
                 <TableCell style={{ whiteSpace: "nowrap" }}>
                   Transaction action:
                 </TableCell>
                 <TableCell>GET THIS FROM LOGS</TableCell>
+              </TableRow> */}
+              <TableRow>
+                <TableCell style={{ whiteSpace: "nowrap" }}>
+                  Gas used:
+                </TableCell>
+                <TableCell>
+                  {Utils.formatEther(transactionDetail.gasUsed)} ETH (
+                  {Utils.formatUnits(transactionDetail.gasUsed, "gwei")} Gwei)
+                </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell style={{ whiteSpace: "nowrap" }}>

@@ -135,7 +135,6 @@ export default function Block() {
                   Gwei)
                 </TableCell>
               </TableRow>
-
               <TableRow>
                 <TableCell style={{ whiteSpace: "nowrap" }}>Hash:</TableCell>
                 <TableCell>
@@ -146,12 +145,14 @@ export default function Block() {
                   />
                 </TableCell>
               </TableRow>
-              <TableCell style={{ whiteSpace: "nowrap" }}>
-                Parent Block:
-              </TableCell>
-              <TableCell>
-                <Hash isCompressed={false} hash={blockDetail.parentHash} />
-              </TableCell>
+              <TableRow>
+                <TableCell style={{ whiteSpace: "nowrap" }}>
+                  Parent Block:
+                </TableCell>
+                <TableCell>
+                  <Hash isCompressed={false} hash={blockDetail.parentHash} />
+                </TableCell>
+              </TableRow>
               {/* Use collapsible row to show even more information https://mui.com/material-ui/react-table/#collapsible-table
               <TableRow>
                 <TableCell style={{ whiteSpace: "nowrap" }}>
