@@ -1,5 +1,6 @@
-import { Skeleton } from "@mui/material";
+import { Skeleton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getBlockWithTransactions } from "./AlchemySDK/commons";
 import formatAgeInSeconds from "./commons";
 
@@ -13,31 +14,35 @@ export default function BlockData({ blockNumber }) {
       );
   });
 
-  return (
+  return blockNumber && blockWithTransactions ? (
     <div>
-      {blockNumber && blockWithTransactions ? (
-        <ul>
-          <li>Block number: {blockWithTransactions.number}</li>
-          <li>
-            Mined {formatAgeInSeconds(blockWithTransactions.timestamp)} ago (@
-            {new Intl.DateTimeFormat("en-US", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-            }).format(blockWithTransactions.timestamp * 1000)}
-            )
-          </li>
-          <li>
-            Transactions in block:
-            {blockWithTransactions?.transactions?.length}
-          </li>
-        </ul>
-      ) : (
-        <Skeleton variant="rectangular" width={210} height={118} />
-      )}
+      <Typography component="h2" variant="h6" color="primary" gutterBottom>
+        Block Number
+      </Typography>
+      <Typography component="p" variant="h6">
+        {blockWithTransactions.number}
+      </Typography>
+      <Typography color="text.secondary" sx={{ flex: 1 }}>
+        Mined {formatAgeInSeconds(blockWithTransactions.timestamp)} ago
+      </Typography>
+      <Typography color="text.secondary" sx={{ flex: 1 }}>
+        (@
+        {new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }).format(blockWithTransactions.timestamp * 1000)}
+        )
+      </Typography>
+      <Typography color="text.secondary" sx={{ flex: 1 }}>
+        Transactions in block:
+        {blockWithTransactions?.transactions?.length}
+      </Typography>
     </div>
+  ) : (
+    <Skeleton variant="rectangular" width={210} height={118} />
   );
 }
