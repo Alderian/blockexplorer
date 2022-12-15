@@ -18,13 +18,14 @@
 - Make an accounts page where a user can look up their balance or someone else's balance
 - Show transactions from an account
 - Show ERC20 token list
+- Search bar that can identify block number, block hash, transaction hash, address end show corresponding page
 
 # TODO List
 
 - More Ideas
 
-  - Search bar that can identify block number, block hash, transaction hash, address end show corresponding page
   - Including list of transactions in a block (or separate page with all block transactions)
+  - Include trace of the transaction (https://docs.alchemy.com/reference/what-are-evm-traces)
 
 - Supercharge
 
@@ -34,7 +35,7 @@
   - What transfers did an address receive this year?
 
 - Extra crazy ideas
-  - Try to get token price from coingecko
+  - Try to get all wallet tokens prices from coingecko
   - Color mode
   - Interact with contract
   - More?
