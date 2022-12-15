@@ -46,7 +46,13 @@ export default function Blocks({ blockNumber }) {
           pr: { xs: 1, sm: 1 },
         }}
       >
-        <Typography sx={{ flex: "1 1 80%" }} variant="h6">
+        <Typography
+          sx={{ flex: "1 1 80%" }}
+          component="h2"
+          variant="h6"
+          color="primary"
+          gutterBottom
+        >
           Latest Blocks
         </Typography>
         <Link

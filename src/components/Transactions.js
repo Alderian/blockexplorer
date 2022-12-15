@@ -38,7 +38,13 @@ export default function Transactions({ blockNumber }) {
           pr: { xs: 1, sm: 1 },
         }}
       >
-        <Typography sx={{ flex: "1 1 70%" }} variant="h6">
+        <Typography
+          sx={{ flex: "1 1 70%" }}
+          component="h2"
+          variant="h6"
+          color="primary"
+          gutterBottom
+        >
           Latest Transactions
         </Typography>
         <Link
