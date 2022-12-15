@@ -37,7 +37,6 @@ export default function App() {
             p: 2,
             display: "flex",
             flexDirection: "column",
-            height: 220,
           }}
         >
           <BlockData blockNumber={blockNumber} />
@@ -50,7 +49,6 @@ export default function App() {
             p: 2,
             display: "flex",
             flexDirection: "column",
-            height: 220,
           }}
         >
           <BlockInformation blockNumber={blockNumber} />
