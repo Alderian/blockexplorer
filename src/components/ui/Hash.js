@@ -33,7 +33,7 @@ export default function Hash({
         )}
       </span>
       {hasCopy && (
-        <span sx={{ m: 2 }}>
+        <span style={{ margin: 3 }}>
           <CopyTextToClip text={hash} size="x-small" />
         </span>
       )}
