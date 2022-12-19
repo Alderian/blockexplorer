@@ -15,7 +15,7 @@ import { useState } from "react";
 import Hash from "../components/ui/Hash";
 import { getBlock } from "../components/AlchemySDK/commons";
 import { Utils } from "alchemy-sdk";
-import formatAgeInSeconds from "../components/commons";
+import { formatAgeInSeconds, formatTimestamp } from "../components/commons";
 
 export default function Block() {
   let { block } = useParams();
@@ -57,16 +57,8 @@ export default function Block() {
                   Timestamp:
                 </TableCell>
                 <TableCell>
-                  Mined {formatAgeInSeconds(blockDetail.timestamp)} ago (@
-                  {new Intl.DateTimeFormat("en-US", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit",
-                  }).format(blockDetail.timestamp * 1000)}
-                  )
+                  Mined {formatAgeInSeconds(blockDetail.timestamp)} ago (@{" "}
+                  {formatTimestamp(blockDetail.timestamp)}
                 </TableCell>
               </TableRow>
               <TableRow>

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getBlock } from "./AlchemySDK/commons";
-import formatAgeInSeconds from "./commons";
+import { formatAgeInSeconds } from "./commons";
 import Hash from "./ui/Hash";
 
 const MAX_ITEMS_PRE_PAGE = process.env.REACT_APP_MAX_ITEMS_PER_PAGE;
