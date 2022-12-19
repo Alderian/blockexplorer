@@ -21,6 +21,7 @@ import {
 } from "../components/AlchemySDK/commons";
 import { Utils } from "alchemy-sdk";
 import { useEthPrice } from "../components/hooks/useEthPrice";
+import { formatCurrency } from "../components/commons";
 
 export default function Address() {
   let { address } = useParams();
@@ -96,15 +97,12 @@ export default function Address() {
                   <TableCell>
                     {addressBalance.balance ? (
                       <span>
-                        {new Intl.NumberFormat("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                        }).format(
+                        {formatCurrency(
                           parseFloat(
                             Utils.formatEther(addressBalance.balance)
                           ) * parseFloat(eth.data.price_usd)
                         )}{" "}
-                        (@ ${eth.data.price_usd}/ETH)
+                        (@ {formatCurrency(eth.data.price_usd)}/ETH)
                       </span>
                     ) : (
                       <Skeleton variant="text" width="100%" />
@@ -123,16 +121,8 @@ export default function Address() {
                   Timestamp:
                 </TableCell>
                 <TableCell>
-                  Mined {formatAgeInSeconds(addressDetail.timestamp)} ago (@
-                  {new Intl.DateTimeFormat("en-US", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit",
-                  }).format(addressDetail.timestamp * 1000)}
-                  )
+                  Mined {formatAgeInSeconds(addressDetail.timestamp)} ago (@{" "}
+                  {formatTimestamp(blockDetail.timestamp)})
                 </TableCell>
               </TableRow>
               <TableRow>

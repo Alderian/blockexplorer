@@ -1,4 +1,5 @@
 import { Divider, Skeleton, Typography } from "@mui/material";
+import { formatCurrency } from "./commons";
 import { useEthPrice } from "./hooks/useEthPrice";
 
 export default function EthereumPrice() {
@@ -9,7 +10,8 @@ export default function EthereumPrice() {
       {eth && eth.data ? (
         <>
           <Typography variant="overline" m={1}>
-            Ether Price: ${eth.data.price_usd} @ {eth.data.price_btc} BTC{" "}
+            Ether Price: {formatCurrency(eth.data.price_usd)} @
+            {eth.data.price_btc} BTC
           </Typography>
           <Typography
             variant="overline"
@@ -21,11 +23,7 @@ export default function EthereumPrice() {
           </Typography>
           <Divider orientation="vertical" variant="middle" flexItem />
           <Typography variant="overline" m={1}>
-            Market Cap:{" "}
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(eth.data.marketCap_usd)}
+            Market Cap: {formatCurrency(eth.data.marketCap_usd)}
           </Typography>
         </>
       ) : (

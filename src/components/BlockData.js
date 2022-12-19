@@ -1,8 +1,7 @@
 import { Skeleton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { getBlockWithTransactions } from "./AlchemySDK/commons";
-import formatAgeInSeconds from "./commons";
+import { formatAgeInSeconds, formatTimestamp } from "./commons";
 
 export default function BlockData({ blockNumber }) {
   let [blockWithTransactions, setBlockWithTransactions] = useState();
@@ -26,16 +25,7 @@ export default function BlockData({ blockNumber }) {
         Mined {formatAgeInSeconds(blockWithTransactions.timestamp)} ago
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        (@
-        {new Intl.DateTimeFormat("en-US", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }).format(blockWithTransactions.timestamp * 1000)}
-        )
+        @ {formatTimestamp(blockWithTransactions.timestamp)}
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         Transactions in block:
