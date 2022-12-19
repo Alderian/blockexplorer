@@ -29,13 +29,14 @@
 
 - Supercharge
 
-  - Given a contract address and token id, can you get the NFT's metadata?
-  - What is the floor price of an NFT right now?
   - Did a pending transaction get mined?
   - What transfers did an address receive this year?
+  - List address NFTs
+  - What is the floor price of an NFT right now?
+  - Given a contract address and token id, can you get the NFT's metadata?
 
 - Extra crazy ideas
   - Try to get all wallet tokens prices from coingecko
-  - Color mode
+  - Dark Color mode
   - Interact with contract
   - More?
