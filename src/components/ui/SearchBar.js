@@ -83,29 +83,20 @@ export default function SearchBar() {
   };
 
   const resolveSearch = async (text) => {
-    console.log("resolving:", text, "length:", text.length);
-
-    debugger;
     if (text.startsWith("0x")) {
       if (text.length === 42) {
-        console.log("try text as an address");
         // Address
         await goToAddressPage(text);
       } else if (text.length === 66) {
         // block hash or transaction
-        console.log("try text as a block hash");
         if (!(await goToBlockPage(text))) {
-          console.log("Not a block hash, try as transaction hash");
           await goToTransactionPage(text);
         }
       }
     } else if (Number.isSafeInteger(text)) {
-      console.log("try text as a block number");
       // Block number?
       await goToBlockPage(text);
     }
-
-    console.log("not resolved");
   };
 
   return (

@@ -8,9 +8,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import Hash from "./ui/Hash";
-import { getBlockWithTransactions } from "./AlchemySDK/commons";
 import { Utils } from "alchemy-sdk";
 import Link from "./ui/Link";
 
@@ -20,16 +18,7 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Transactions({ blockNumber }) {
-  let [blockWithTransactions, setBlockWithTransactions] = useState();
-
-  useEffect(() => {
-    if (blockNumber && !blockWithTransactions)
-      getBlockWithTransactions(blockNumber).then((res) =>
-        setBlockWithTransactions(res)
-      );
-  });
-
+export default function Transactions({ blockWithTransactions }) {
   return (
     <>
       <Toolbar
@@ -56,9 +45,7 @@ export default function Transactions({ blockNumber }) {
           View all transactions
         </Link>
       </Toolbar>
-      {blockNumber &&
-      blockWithTransactions &&
-      blockWithTransactions.transactions ? (
+      {blockWithTransactions && blockWithTransactions.transactions ? (
         <Table size="small">
           <TableHead>
             <TableRow>

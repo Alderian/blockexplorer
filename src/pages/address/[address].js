@@ -10,9 +10,6 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useState } from "react";
 import Hash from "../../components/ui/Hash";
 import {
   getAddressBalance,
@@ -23,31 +20,15 @@ import { Utils } from "alchemy-sdk";
 import { useEthPrice } from "../../components/hooks/useEthPrice";
 import { formatCurrency } from "../../components/commons";
 
-export default function Address() {
-  const router = useRouter();
-  const { address } = router.query;
+import { plainBigNumber, toBigNumber } from "../../components/commons";
 
-  const [addressBalance, setAddressBalance] = useState();
-  const [addressTokens, setAddressTokens] = useState();
-  const [addressTransactions, setAddressTransactions] = useState();
+export default function Address({ data }) {
   const { eth } = useEthPrice();
 
-  useEffect(() => {
-    if (address) {
-      getAddressBalance(address).then((res) => {
-        console.log(res);
-        setAddressBalance(res);
-      });
-      getAddressTokens(address).then((res) => {
-        console.log(res);
-        setAddressTokens(res);
-      });
-      getAddressTransactions(address).then((res) => {
-        console.log(res);
-        setAddressTransactions(res);
-      });
-    }
-  }, [address]);
+  let address = data ? data.address : null;
+  let addressBalance = data ? data.addressBalance : null;
+  let addressTokens = data ? data.addressTokens : null;
+  let addressTransactions = data ? data.addressTransactions : null;
 
   return (
     <>
@@ -97,7 +78,7 @@ export default function Address() {
                     Ether value:
                   </TableCell>
                   <TableCell>
-                    {addressBalance.balance ? (
+                    {addressBalance.balance && eth.data ? (
                       <span>
                         {formatCurrency(
                           parseFloat(
@@ -303,4 +284,40 @@ export default function Address() {
       </Grid>
     </>
   );
+}
+
+// This value is considered fresh for ten seconds (s-maxage=10).
+// If a request is repeated within the next 10 seconds, the previously
+// cached value will still be fresh. If the request is repeated before 59 seconds,
+// the cached value will be stale but still render (stale-while-revalidate=59).
+//
+// In the background, a revalidation request will be made to populate the cache
+// with a fresh value. If you refresh the page, you will see the new value.
+export async function getServerSideProps({ params, req, res }) {
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=100, stale-while-revalidate=59"
+  );
+
+  const { address } = params;
+
+  const addressBalance = await getAddressBalance(address);
+  const addressTokens = await getAddressTokens(address);
+  const addressTransactions = await getAddressTransactions(address);
+
+  const data = {
+    address: address,
+    addressBalance: {
+      balance: plainBigNumber(addressBalance.balance),
+    },
+    addressTokens: {
+      ...addressTokens,
+    },
+    addressTransactions: {
+      ...addressTransactions,
+    },
+  };
+
+  // Pass data to the page via props
+  return { props: { data } };
 }

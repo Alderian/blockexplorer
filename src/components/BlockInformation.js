@@ -1,19 +1,8 @@
 import { Container, Grid, Skeleton, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { getBlockWithTransactions } from "./AlchemySDK/commons";
 import Hash from "./ui/Hash";
 
-export default function BlockInformation({ blockNumber }) {
-  let [blockWithTransactions, setBlockWithTransactions] = useState();
-
-  useEffect(() => {
-    if (blockNumber && !blockWithTransactions)
-      getBlockWithTransactions(blockNumber).then((res) =>
-        setBlockWithTransactions(res)
-      );
-  });
-
-  return blockNumber && blockWithTransactions ? (
+export default function BlockInformation({ blockWithTransactions }) {
+  return blockWithTransactions ? (
     <Container>
       <Typography component="h2" variant="h6" color="primary" gutterBottom>
         Block Information

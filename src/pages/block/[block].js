@@ -9,27 +9,14 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useState } from "react";
 import Hash from "../../components/ui/Hash";
 import { getBlock } from "../../components/AlchemySDK/commons";
 import { Utils } from "alchemy-sdk";
 import { formatAgeInSeconds, formatTimestamp } from "../../components/commons";
+import { plainBigNumber, toBigNumber } from "../../components/commons";
 
-export default function Block() {
-  const router = useRouter();
-  const { block } = router.query;
-  const [blockDetail, setBlockDetail] = useState();
-
-  useEffect(() => {
-    if (block) {
-      getBlock(block).then((res) => {
-        setBlockDetail(res);
-      });
-    }
-  }, [block]);
-
+export default function Block({ data }) {
+  let blockDetail = data ? data.blockDetail : null;
   return (
     <Grid item xs={12}>
       <Paper
@@ -58,7 +45,7 @@ export default function Block() {
                   Timestamp:
                 </TableCell>
                 <TableCell>
-                  Mined {formatAgeInSeconds(blockDetail.timestamp)} ago (@{" "}
+                  Mined {blockDetail.timePassed} ago (@{" "}
                   {formatTimestamp(blockDetail.timestamp)}
                 </TableCell>
               </TableRow>
@@ -118,11 +105,15 @@ export default function Block() {
                 <TableCell>
                   🔥
                   {Utils.formatEther(
-                    blockDetail.baseFeePerGas.mul(blockDetail.gasUsed)
+                    toBigNumber(blockDetail.baseFeePerGas).mul(
+                      blockDetail.gasUsed
+                    )
                   )}{" "}
                   ETH (
                   {Utils.formatUnits(
-                    blockDetail.baseFeePerGas.mul(blockDetail.gasUsed),
+                    toBigNumber(blockDetail.baseFeePerGas).mul(
+                      blockDetail.gasUsed
+                    ),
                     "gwei"
                   )}{" "}
                   Gwei)
@@ -165,4 +156,41 @@ export default function Block() {
       </Paper>
     </Grid>
   );
+}
+
+// This value is considered fresh for ten seconds (s-maxage=10).
+// If a request is repeated within the next 10 seconds, the previously
+// cached value will still be fresh. If the request is repeated before 59 seconds,
+// the cached value will be stale but still render (stale-while-revalidate=59).
+//
+// In the background, a revalidation request will be made to populate the cache
+// with a fresh value. If you refresh the page, you will see the new value.
+export async function getServerSideProps({ params, req, res }) {
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=100, stale-while-revalidate=59"
+  );
+
+  const { block } = params;
+  const b = await getBlock(block);
+
+  const data = {
+    blockDetail: {
+      ...b,
+      wait: null,
+      hash: b.hash,
+      parentHash: b.parentHash,
+      number: b.number,
+      timestamp: b.timestamp,
+      timePassed: formatAgeInSeconds(b.timestamp),
+      miner: b.miner,
+      gasLimit: plainBigNumber(b.gasLimit),
+      gasUsed: plainBigNumber(b.gasUsed),
+      baseFeePerGas: plainBigNumber(b.baseFeePerGas),
+      _difficulty: plainBigNumber(b._difficulty),
+    },
+  };
+
+  // Pass data to the page via props
+  return { props: { data } };
 }

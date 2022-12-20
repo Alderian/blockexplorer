@@ -1,19 +1,8 @@
 import { Skeleton, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { getBlockWithTransactions } from "./AlchemySDK/commons";
-import { formatAgeInSeconds, formatTimestamp } from "./commons";
+import { formatTimestamp } from "./commons";
 
-export default function BlockData({ blockNumber }) {
-  let [blockWithTransactions, setBlockWithTransactions] = useState();
-
-  useEffect(() => {
-    if (blockNumber && !blockWithTransactions)
-      getBlockWithTransactions(blockNumber).then((res) =>
-        setBlockWithTransactions(res)
-      );
-  });
-
-  return blockNumber && blockWithTransactions ? (
+export default function BlockData({ blockWithTransactions }) {
+  return blockWithTransactions ? (
     <div>
       <Typography component="h2" variant="h6" color="primary" gutterBottom>
         Block Number
@@ -22,7 +11,7 @@ export default function BlockData({ blockNumber }) {
         {blockWithTransactions.number}
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        Mined {formatAgeInSeconds(blockWithTransactions.timestamp)} ago
+        Mined {blockWithTransactions.timePassed} ago
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         @ {formatTimestamp(blockWithTransactions.timestamp)}

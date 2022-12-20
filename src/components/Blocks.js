@@ -8,9 +8,6 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { getBlock } from "./AlchemySDK/commons";
-import { formatAgeInSeconds } from "./commons";
 import Hash from "./ui/Hash";
 import Link from "./ui/Link";
 
@@ -20,24 +17,7 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Blocks({ blockNumber }) {
-  const [blocks, setBlocks] = useState();
-
-  async function getLatestBlocks(currentBlock, count = MAX_ITEMS_PRE_PAGE) {
-    let latestBlocks = [];
-    let lastBlock = currentBlock;
-
-    for (let i = 0; i < count; i++) {
-      latestBlocks.push(await getBlock(lastBlock - i));
-    }
-
-    setBlocks(latestBlocks);
-  }
-
-  useEffect(() => {
-    if (blockNumber && !blocks) getLatestBlocks(blockNumber);
-  });
-
+export default function Blocks({ blocks }) {
   return (
     <>
       <Toolbar
@@ -64,7 +44,7 @@ export default function Blocks({ blockNumber }) {
           View all blocks
         </Link>
       </Toolbar>
-      {blockNumber && blocks ? (
+      {blocks ? (
         <Table size="small">
           <TableHead>
             <TableRow>
@@ -81,8 +61,8 @@ export default function Blocks({ blockNumber }) {
                 <TableCell>
                   <Hash path="block" hash={t.hash} />
                 </TableCell>
-                <TableCell>{t.transactions.length}</TableCell>
-                <TableCell>{formatAgeInSeconds(t.timestamp)}</TableCell>
+                <TableCell>{t.transactions}</TableCell>
+                <TableCell>{t.timePassed}</TableCell>
               </TableRow>
             ))}
           </TableBody>

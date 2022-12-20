@@ -1,3 +1,5 @@
+import { BigNumber } from "@ethersproject/bignumber";
+
 /**
  * Calculate elapsed time in seconds
  *
@@ -36,4 +38,25 @@ export function formatCurrency(amount) {
     style: "currency",
     currency: "USD",
   }).format(amount);
+}
+
+/**
+ * Converts bigDecimal to wei string
+ * (this is used in SSR functions)
+ *
+ * @param {*} bigDecimal
+ * @returns
+ */
+export function plainBigNumber(bigDecimal) {
+  return bigDecimal && bigDecimal.toString ? bigDecimal.toString() : "0";
+}
+
+/**
+ * Converts a number or string in BigNuber to operate as usual
+ *
+ * @param {*} plainNumber
+ * @returns
+ */
+export function toBigNumber(plainNumber) {
+  return plainNumber ? BigNumber.from(plainNumber) : BigNumber.from(0);
 }

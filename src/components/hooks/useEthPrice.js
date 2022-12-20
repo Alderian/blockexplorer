@@ -18,7 +18,7 @@ const fetcher = async (url) => {
 };
 
 export const useEthPrice = () => {
-  const { data, ...rest } = useSWR(URL, fetcher, { refreshInterval: 10000 });
+  const { data, ...rest } = useSWR(URL, fetcher, { refreshInterval: 50000 });
 
   return { eth: { data, ...rest } };
 };
