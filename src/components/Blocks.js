@@ -1,5 +1,4 @@
 import {
-  Link,
   Skeleton,
   Table,
   TableBody,
@@ -13,8 +12,9 @@ import { useEffect, useState } from "react";
 import { getBlock } from "./AlchemySDK/commons";
 import { formatAgeInSeconds } from "./commons";
 import Hash from "./ui/Hash";
+import Link from "./ui/Link";
 
-const MAX_ITEMS_PRE_PAGE = process.env.REACT_APP_MAX_ITEMS_PER_PAGE;
+const MAX_ITEMS_PRE_PAGE = process.env.NEXT_PUBLIC_MAX_ITEMS_PER_PAGE;
 
 function preventDefault(event) {
   event.preventDefault();

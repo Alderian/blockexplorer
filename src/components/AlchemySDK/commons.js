@@ -1,13 +1,13 @@
 import { Alchemy, Network } from "alchemy-sdk";
 
 export const ALCHEMY_REFRESH_INTERVAL =
-  process.env.REACT_APP_ALCHEMY_API_REFRESH_INERVAL;
+  process.env.NEXT_PUBLIC_ALCHEMY_API_REFRESH_INERVAL;
 
 // Refer to the README doc for more information about using API
 // keys in client-side code. You should never do this in production
 // level code.
 export const settings = {
-  apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
+  apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
   network: Network.ETH_MAINNET,
 };
 
@@ -18,7 +18,7 @@ export const settings = {
 //   https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
 export const alchemy = new Alchemy(settings);
 
-const MAX_ITEMS_PRE_PAGE = process.env.REACT_APP_MAX_ITEMS_PER_PAGE;
+const MAX_ITEMS_PRE_PAGE = process.env.NEXT_PUBLIC_MAX_ITEMS_PER_PAGE;
 
 // --
 

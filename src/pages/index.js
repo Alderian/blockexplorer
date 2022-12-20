@@ -8,7 +8,7 @@ import Transactions from "../components/Transactions";
 import { getLatestBlockNumber } from "../components/AlchemySDK/commons";
 import Blocks from "../components/Blocks";
 
-export default function App() {
+export default function Index() {
   const [blockNumber, setBlockNumber] = useState();
 
   useEffect(() => {

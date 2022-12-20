@@ -10,21 +10,23 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useState } from "react";
-import Hash from "../components/ui/Hash";
+import Hash from "../../components/ui/Hash";
 import {
   getAddressBalance,
   getAddressTokens,
   getAddressTransactions,
-} from "../components/AlchemySDK/commons";
+} from "../../components/AlchemySDK/commons";
 import { Utils } from "alchemy-sdk";
-import { useEthPrice } from "../components/hooks/useEthPrice";
-import { formatCurrency } from "../components/commons";
+import { useEthPrice } from "../../components/hooks/useEthPrice";
+import { formatCurrency } from "../../components/commons";
 
 export default function Address() {
-  let { address } = useParams();
+  const router = useRouter();
+  const { address } = router.query;
+
   const [addressBalance, setAddressBalance] = useState();
   const [addressTokens, setAddressTokens] = useState();
   const [addressTransactions, setAddressTransactions] = useState();
@@ -281,7 +283,7 @@ export default function Address() {
                 {addressTransactions.transfers.map((t, i) => (
                   <TableRow key={i} variant="overline">
                     <TableCell>
-                      <Hash path="tx" hash={t.hash} />
+                      <Hash path="transaction" hash={t.hash} />
                     </TableCell>
                     <TableCell>{t.asset}</TableCell>
                     <TableCell>

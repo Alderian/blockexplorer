@@ -1,7 +1,6 @@
 import * as React from "react";
-import Link from "@mui/material/Link";
 import { CopyTextToClip } from "./CopyTextToClip";
-import { Link as LinkRouter } from "react-router-dom";
+import Link from "./Link";
 
 const sliceHash = (hash) => {
   return hash
@@ -25,7 +24,7 @@ export default function Hash({
     <span {...props}>
       <span>
         {hasLink ? (
-          <Link color="primary" component={LinkRouter} to={hrefPath}>
+          <Link color="primary" href={hrefPath}>
             {hashText}
           </Link>
         ) : (
