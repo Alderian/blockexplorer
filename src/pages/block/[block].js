@@ -9,16 +9,17 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useState } from "react";
-import Hash from "../components/ui/Hash";
-import { getBlock } from "../components/AlchemySDK/commons";
+import Hash from "../../components/ui/Hash";
+import { getBlock } from "../../components/AlchemySDK/commons";
 import { Utils } from "alchemy-sdk";
-import { formatAgeInSeconds, formatTimestamp } from "../components/commons";
+import { formatAgeInSeconds, formatTimestamp } from "../../components/commons";
 
 export default function Block() {
-  let { block } = useParams();
+  const router = useRouter();
+  const { block } = router.query;
   const [blockDetail, setBlockDetail] = useState();
 
   useEffect(() => {
@@ -142,7 +143,11 @@ export default function Block() {
                   Parent Block:
                 </TableCell>
                 <TableCell>
-                  <Hash isCompressed={false} hash={blockDetail.parentHash} />
+                  <Hash
+                    path={"block"}
+                    hash={blockDetail.parentHash}
+                    isCompressed={false}
+                  />
                 </TableCell>
               </TableRow>
               {/* Use collapsible row to show even more information https://mui.com/material-ui/react-table/#collapsible-table

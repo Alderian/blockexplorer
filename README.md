@@ -5,12 +5,13 @@ The lessons this week covered the Ethereum JSON-RPC API and the `ethers.js` libr
 Let's put that knowledge to the test by building our very own **Ethereum Block Explorer**!
 
 Blockexplorers give us the ability to view lots of different information about the blockchain including data about:
-  * the blockchain network itself
-  * blocks in the blockchain
-  * transactions in a block
-  * accounts
-  * and many other things
-  
+
+- the blockchain network itself
+- blocks in the blockchain
+- transactions in a block
+- accounts
+- and many other things
+
 [Etherscan](https://etherscan.io/) is a good example of an Ethereum blockexplorer. Check it out to get familiar with how blockexplorers generally work.
 
 This particular project is very much open-ended. We'll add some challenges here to get your imagination going, but use Etherscan as a guide for features you might consider building in your project.
@@ -23,34 +24,46 @@ After that cd into the base directory of the project and run `npm install` to do
 
 In this project we chose to use React for a front-end and added minimal front-end code to get you going, but feel free to use any front-end stack you like.
 
-Unlike the lessons this week that used the Ethereum JSON-RPC API and the `ethers.js` library to communicate with the Ethereum network, the starter code in this project uses the [AlchemySDK](https://docs.alchemy.com/reference/alchemy-sdk-quickstart?a=eth-bootcamp). The AlchemySDK's core package wraps almost all of the `ethers.js` provider functionality that we learned about and should feel very familiar to you. 
+Unlike the lessons this week that used the Ethereum JSON-RPC API and the `ethers.js` library to communicate with the Ethereum network, the starter code in this project uses the [AlchemySDK](https://docs.alchemy.com/reference/alchemy-sdk-quickstart?a=eth-bootcamp). The AlchemySDK's core package wraps almost all of the `ethers.js` provider functionality that we learned about and should feel very familiar to you.
 
 For example, the following `ethers.js` code
+
 ```js
 const blockNumber = await provider.getBlockNumber();
 ```
+
 can be written using the AlchemySDK like so:
+
 ```js
-const blockNumber = await alchemy.core.getBlockNumber()
+const blockNumber = await alchemy.core.getBlockNumber();
 ```
+
 Another `ethers.js ` example
+
 ```js
-const transcations = await provider.getBlockWithTransactions(SOME_BLOCK_NUMBER)
+const transcations = await provider.getBlockWithTransactions(SOME_BLOCK_NUMBER);
 ```
+
 translates to
+
 ```js
-const transactions = await alchemy.core.getBlockWithTransactions(SOME_BLOCK_NUMBER)
+const transactions = await alchemy.core.getBlockWithTransactions(
+  SOME_BLOCK_NUMBER
+);
 ```
+
 and so on.
 
 There are some `ethers.js` provider functions that are not often-used and therefore not included in `alchemy.core`. But if you ever need the full ethers provider functionality you can access the provider directly with the following code:
+
 ```js
 const ethersProvider = await alchemy.config.getProvider();
 ```
 
 You can find lots of good docs on the AlchemySDK here:
-  * [API Quickstart](https://docs.alchemy.com/reference/alchemy-sdk-quickstart?a=eth-bootcamp)
-  * [API Overview](https://docs.alchemy.com/reference/api-overview?a=eth-bootcamp)
+
+- [API Quickstart](https://docs.alchemy.com/reference/alchemy-sdk-quickstart?a=eth-bootcamp)
+- [API Overview](https://docs.alchemy.com/reference/api-overview?a=eth-bootcamp)
 
 Alright, without further ado, let's get started!
 
@@ -66,10 +79,10 @@ Create an empty `.env` file in the base directory of this project.
 Add the following line to the `.env` file replacing `YOUR_ALCHEMY_API_KEY` with your api key.
 
 ```sh
-REACT_APP_ALCHEMY_API_KEY=YOUR_ALCHEMY_API_KEY
+NEXT_PUBLIC_ALCHEMY_API_KEY=YOUR_ALCHEMY_API_KEY
 ```
 
-Do not remove the `REACT_APP_` prefix. React uses that to import env variables.
+Do not remove the `NEXT_PUBLIC_` prefix. React uses that to import env variables.
 
 **⚠️ Note**
 
@@ -113,10 +126,11 @@ How about getting details for individual transactions? The [alchemy.core.getTran
 ## 6. Supercharge your blockexplorer using AlchemySDK's specialized APIs
 
 By using the AlchemySDK you can really supercharge your projects with additional API functionality that isn't included in the `ethers.js` package including:
-  * NFT methods
-  * WebSocket methods
-  * Alchemy's Transact API functionality
-  * endpoints for using Alchemy's Notify Webhooks
+
+- NFT methods
+- WebSocket methods
+- Alchemy's Transact API functionality
+- endpoints for using Alchemy's Notify Webhooks
 
 Read more about the above in the [Alchemy SDK Surface docs](https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview?a=eth-bootcamp). Using the SDK can implement the following features?
 

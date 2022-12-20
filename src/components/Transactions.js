@@ -1,5 +1,4 @@
 import {
-  Link,
   Skeleton,
   Table,
   TableBody,
@@ -13,8 +12,9 @@ import { useEffect, useState } from "react";
 import Hash from "./ui/Hash";
 import { getBlockWithTransactions } from "./AlchemySDK/commons";
 import { Utils } from "alchemy-sdk";
+import Link from "./ui/Link";
 
-const MAX_ITEMS_PRE_PAGE = process.env.REACT_APP_MAX_ITEMS_PER_PAGE;
+const MAX_ITEMS_PRE_PAGE = process.env.NEXT_PUBLIC_MAX_ITEMS_PER_PAGE;
 
 function preventDefault(event) {
   event.preventDefault();
@@ -74,7 +74,7 @@ export default function Transactions({ blockNumber }) {
               .map((t, i) => (
                 <TableRow key={i} variant="overline">
                   <TableCell>
-                    <Hash path="tx" hash={t.hash} />
+                    <Hash path="transaction" hash={t.hash} />
                   </TableCell>
                   <TableCell>{t.type}</TableCell>
                   <TableCell>

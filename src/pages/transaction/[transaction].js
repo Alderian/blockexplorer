@@ -9,15 +9,16 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useState } from "react";
-import Hash from "../components/ui/Hash";
-import { getTransactionReceipt } from "../components/AlchemySDK/commons";
+import Hash from "../../components/ui/Hash";
+import { getTransactionReceipt } from "../../components/AlchemySDK/commons";
 import { Utils } from "alchemy-sdk";
 
 export default function Transaction() {
-  let { transaction } = useParams();
+  const router = useRouter();
+  const { transaction } = router.query;
   const [transactionDetail, setTransactionDetail] = useState();
 
   useEffect(() => {

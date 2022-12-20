@@ -7,6 +7,7 @@ import {
   getBlock,
   getTransactionReceipt,
 } from "../AlchemySDK/commons";
+import { useRouter } from "next/router";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -49,13 +50,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchBar() {
+  let router = useRouter();
+
   const goToAddressPage = async (text) => {
     let address = await getAddressBalance(text);
 
     if (!address) {
       return false;
     }
-    window.location.replace(`/address/${text}`);
+    router.push(`/address/${text}`);
     return true;
   };
 
@@ -65,7 +68,7 @@ export default function SearchBar() {
     if (!block) {
       return false;
     }
-    window.location.replace(`/block/${text}`);
+    router.push(`/block/${text}`);
     return true;
   };
 
@@ -75,13 +78,14 @@ export default function SearchBar() {
     if (!transaction) {
       return false;
     }
-    window.location.replace(`/tx/${text}`);
+    router.push(`/transaction/${text}`);
     return true;
   };
 
   const resolveSearch = async (text) => {
     console.log("resolving:", text, "length:", text.length);
 
+    debugger;
     if (text.startsWith("0x")) {
       if (text.length === 42) {
         console.log("try text as an address");

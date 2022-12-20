@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Container } from "@mui/material";
-import Link from "@mui/material/Link";
+import Link from "./ui/Link";
 import SearchBar from "./ui/SearchBar";
 
 export default function HeaderToolBar() {
